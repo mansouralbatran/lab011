@@ -21,8 +21,29 @@ let matrialname = [];
 let views = [];
 let votes = [];
 
+// let matrials = [];
+matrial.matrials = [];
 
-let matrials = [];
+
+function saveToLocalStorage() {
+    let data = JSON.stringify(matrial.matrials);
+    localStorage.setItem('mate', data);
+}
+function readFromLocalStorage() {
+    let stringObj = localStorage.getItem('mate');
+    console.log(stringObj);
+    let normalObj = JSON.parse(stringObj);
+    // console.log(normalObj);
+    if (normalObj ) {
+        matrial.matrials = normalObj;
+        // reanderrandomimg();
+    }
+    // console.log(Coffee.drinks);
+}
+// readFromLocalStorage();
+
+
+
 let matrialimag = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'breakfast.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'water-can.jpg', 'wine-glass.jpg']
 
 function matrial(slecedtmatrial) {
@@ -32,18 +53,35 @@ function matrial(slecedtmatrial) {
     this.vew = 0;
 
 
-
-    matrials.push(this);
+    matrial.matrials.push(this)
+    // matrials.push(this);
     matrialname.push(this.matname);
 
+
+
 }
+
+
+
+
+
 
 for (let i = 0; i < matrialimag.length; i++) {
     new matrial(matrialimag[i]);
 
-} console.log(matrials);
+}
+
+
+
+
+
+
+// console.log(matrial.matrials,"mate");
+
+
+// console.log(matrials);
 function randomindex() {
-    return Math.floor(Math.random() * matrials.length);
+    return Math.floor(Math.random() * matrial.matrials.length);
 }
 let firindex;
 let secindex;
@@ -54,46 +92,41 @@ function reanderrandomimg() {
     firindex = randomindex();
     secindex = randomindex();
     thiindex = randomindex();
-   
-    while (firindex === secindex || secindex === thiindex || firindex === thiindex||past.includes(firindex)||past.includes(thiindex)||past.includes(secindex)) {
+
+    while (firindex === secindex || secindex === thiindex || firindex === thiindex || past.includes(firindex) || past.includes(thiindex) || past.includes(secindex)) {
         firindex = randomindex();
         secindex = randomindex();
         thiindex = randomindex();
 
     }
     // past.push(firindex);
-    past=[firindex,secindex,thiindex];
-    
- 
-
-    firel.setAttribute('src', matrials[firindex].matimage);
-    secel.setAttribute('src', matrials[secindex].matimage);
-    thiel.setAttribute('src', matrials[thiindex].matimage);
-    firel.setAttribute('title', matrials[firindex].matname);
-    secel.setAttribute('title', matrials[secindex].matname);
-    thiel.setAttribute('title', matrials[thiindex].matname);
-    firel.setAttribute('alt', matrials[firindex].matname);
-    secel.setAttribute('alt', matrials[secindex].matname);
-    thiel.setAttribute('alt', matrials[thiindex].matname);
+    past = [firindex, secindex, thiindex];
 
 
+
+    firel.setAttribute('src', matrial.matrials[firindex].matimage);
+    secel.setAttribute('src', matrial.matrials[secindex].matimage);
+    thiel.setAttribute('src', matrial.matrials[thiindex].matimage);
+    firel.setAttribute('title', matrial.matrials[firindex].matname);
+    secel.setAttribute('title', matrial.matrials[secindex].matname);
+    thiel.setAttribute('title', matrial.matrials[thiindex].matname);
+    firel.setAttribute('alt', matrial.matrials[firindex].matname);
+    secel.setAttribute('alt', matrial.matrials[secindex].matname);
+    thiel.setAttribute('alt', matrial.matrials[thiindex].matname);
 
 
 
 
-    matrials[firindex].vew++;
-    matrials[secindex].vew++;
-    matrials[thiindex].vew++;
+
+
+    matrial.matrials[firindex].vew++;
+    matrial.matrials[secindex].vew++;
+    matrial.matrials[thiindex].vew++;
+    // saveToLocalStorage();
+
 
 }
-function rplecaterender(arrayIn) {
-    return arrayIn.every(function (element, index) {
-        return !index || element !== arrayIn[index - 1];
-    });
-}
 
-
-reanderrandomimg();
 
 let buttonel = document.getElementById('button');
 firel.addEventListener('click', handclicks);
@@ -102,16 +135,16 @@ thiel.addEventListener('click', handclicks);
 
 
 reanderrandomimg();
-
+// readFromLocalStorage();
 function handclicks(event) {
     if (attempts <= maxattempts) {
         let checkedimag = event.target.id;
         if (checkedimag = 'fir') {
-            matrials[firindex].vot++
+            matrial.matrials[firindex].vot++
         } else if (checkedimag = 'sec') {
-            matrials[secindex].vot++
+            matrial.matrials[secindex].vot++
         } else if (checkedimag = 'thi') {
-            matrials[thiindex].vot++
+            matrial.matrials[thiindex].vot++
         }
         reanderrandomimg();
 
@@ -128,29 +161,33 @@ function handclicks(event) {
         //     votes.push(matrials[i].vot );
         //     views.push( matrials[i].vew);
     }
-
+   
 
     buttonel.addEventListener("click", haclicks);
     function haclicks(event) {
+
         let ulel = document.getElementById('res');
         ulel.innerHTML = '';
-        for (let i = 0; i < matrials.length; i++) {
+        for (let i = 0; i < matrial.matrials.length; i++) {
 
             let liel = document.createElement('li');
-            liel.textContent = matrials[i].matname + ' has ' + matrials[i].vot + ' vots and' + matrials[i].vew + 'vews'
+            liel.textContent = matrial.matrials[i].matname + ' has ' + matrial.matrials[i].vot + ' vots and' + matrial.matrials[i].vew + 'vews'
             ulel.appendChild(liel);
-            votes.push(matrials[i].vot);
-            views.push(matrials[i].vew);
+            votes.push(matrial.matrials[i].vot);
+            views.push(matrial.matrials[i].vew);
 
         }
 
 
+
+        saveToLocalStorage();
         renderchart();
+        
     } attempts++;
 
 
 
-
+    
 
 }
 
@@ -191,4 +228,5 @@ function renderchart() {
             }
         }
     });
-}
+};
+readFromLocalStorage();
