@@ -18,12 +18,13 @@
     font-size: 50px;
   }
   
-  #res{
-    
+  #res{border: solid 10px rgb(72, 77, 94);
+    border-radius: 6%;
+    color: seashell;
       float:right;
       margin-right:35%;
       
-    background-color: slategrey;
+    background-color: rgb(48, 54, 44);
 
   }
   body{
